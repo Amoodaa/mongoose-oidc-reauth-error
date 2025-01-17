@@ -12,6 +12,9 @@ I am unsure of how to support the "refresh_token" in this flow, as it is not a H
 
 Let me know what can i do next
 
+Further improvements to this project would be to use [salrashid123/gce_metadata_server](https://github.com/salrashid123/gce_metadata_server)
+and use the GCP environment instead of test environment to better emulate real scenario
+
 ### How to setup and run
 
 - start by running `yarn`
