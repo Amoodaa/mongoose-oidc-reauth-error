@@ -19,7 +19,7 @@ Let me know what can i do next
   - `yarn compile:mock-provider`
     > this will compile my version of the [@mongodb-js/oidc-mock-provider](https://www.npmjs.com/package/@mongodb-js/oidc-mock-provider) and put it next to Dockerfile to copy it
   - `yarn docker:oidc-mongodb-server`
-    > this will setup the docker file shallow cloned from [mongodb-js/devtools-docker-test-envs](https://github.com/mongodb-js/devtools-docker-test-envs) repo
+    > this will setup the docker file shallow cloned from [mongodb-js/devtools-docker-test-envs](https://github.com/mongodb-js/devtools-docker-test-envs) repo, you might need to edit based on your platform, it is defaulted for arm64 platforms, comment that line and uncomment other line
   - `yarn oidc:get-token`
     > this will communicate with servers once docker is up, create a token and put it in a file called `access-token.dat` this token lives for 30s or as set in [this file:6](./docker-test-envs/docker/oidc/mock-oidc-provider/oidc-mock-provider.js)
   - `yarn dev`
