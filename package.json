@@ -7,7 +7,7 @@
     "compile:mock-provider": "tsc ./mongodb-js-oidc-mock-provider.ts --outDir ./docker-test-envs/docker/oidc/mock-oidc-provider/",
     "docker:oidc-mongodb-server": "cd docker-test-envs/docker/oidc/mock-oidc-provider && docker-compose -f docker-compose.yaml up",
     "oidc:get-token": "ts-node getToken.ts",
-    "dev": "cross-env DEBUG=1 OIDC_TOKEN_FILE=./access-token.dat ts-node-dev index.ts",
+    "dev": "cross-env DEBUG=1 OIDC_TOKEN_FILE=./access-token.dat ts-node-dev index.ts --transpile-only",
     "bootstrap": "npm run compile:mock-provider && npm run docker:oidc-mongodb-server"
   },
   "dependencies": {

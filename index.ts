@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import type { MongoServerError } from 'mongodb';
 import Express from 'express';
 
 mongoose.connect('mongodb://localhost:27096', {
@@ -29,9 +30,29 @@ async function setupExpressTest() {
   const app = Express();
 
   app.get('*', async (_req, res) => {
-    const foo = await fooModel.create({ state: 'on' });
+    try {
+      const foo = await fooModel.create({ state: 'on' });
 
-    res.json(foo.toObject());
+      res.json(foo.toObject());
+    } catch (e) {
+      console.error(e);
+      const {
+        cause,
+        code,
+        errmsg,
+        message,
+        codeName,
+        stack,
+      }: MongoServerError = e;
+      res.json({
+        message,
+        errmsg,
+        cause,
+        code,
+        codeName,
+        stack,
+      });
+    }
   });
 
   app.listen(8080, () => {
