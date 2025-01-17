@@ -24,8 +24,7 @@ I've spent 2 days working this out, between reading mongodb driver specs, mongod
 - `yarn oidc:get-token` you start counting seconds since you ran this command
 - `yarn dev`
 - open http://localhost:8080, you can keep refreshing until the token expires
-- wait 30s or the time set in previous setup steps
-- open http://localhost:8080, you will now see the error:
+- wait 30s for for setInterval to execute a command that will error, you will now see the error:
 
 ```
 MongoServerError: Command insert requires reauthentication since the current authorization session has expired. Please re-auth.
@@ -40,6 +39,34 @@ MongoServerError: Command insert requires reauthentication since the current aut
     at executeOperation (D:\code\mongoose-8-8-type-error\node_modules\mongodb\src\operations\execute_operation.ts:112:12)
     at Collection.insertOne (D:\code\mongoose-8-8-type-error\node_modules\mongodb\src\collection.ts:284:12)
 [ERROR] 18:08:56 MongoServerError: Command insert requires reauthentication since the current authorization session has expired. Please re-auth.
+```
+
+But the error returns are inconsistent, i also get the following error more than the previous one, could this be a sign of a race condition?
+These error originate from the same error stacktrace which is interesting
+
+```
+MongoServerError: Authentication failed.
+    at Connection.sendCommand (D:\code\mongoose-8-8-type-error\node_modules\mongodb\src\cmap\connection.ts:545:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at Connection.command (D:\code\mongoose-8-8-type-error\node_modules\mongodb\src\cmap\connection.ts:617:22)
+    at TokenMachineWorkflow.execute (D:\code\mongoose-8-8-type-error\node_modules\mongodb\src\cmap\auth\mongodb_oidc\machine_workflow.ts:50:5)
+    at TokenMachineWorkflow.reauthenticate (D:\code\mongoose-8-8-type-error\node_modules\mongodb\src\cmap\auth\mongodb_oidc\machine_workflow.ts:72:5)
+    at MongoDBOIDC.auth (D:\code\mongoose-8-8-type-error\node_modules\mongodb\src\cmap\auth\mongodb_oidc.ts:151:7)
+    at MongoDBOIDC.reauth (D:\code\mongoose-8-8-type-error\node_modules\mongodb\src\cmap\auth\auth_provider.ts:72:7)
+    at ConnectionPool.reauthenticate (D:\code\mongoose-8-8-type-error\node_modules\mongodb\src\cmap\connection_pool.ts:571:5)
+    at Server.command (D:\code\mongoose-8-8-type-error\node_modules\mongodb\src\sdam\server.ts:348:9)
+    at InsertOneOperation.executeCommand (D:\code\mongoose-8-8-type-error\node_modules\mongodb\src\operations\command.ts:179:12) {
+  errorResponse: {
+    ok: 0,
+    errmsg: 'Authentication failed.',
+    code: 18,
+    codeName: 'AuthenticationFailed'
+  },
+  ok: 0,
+  code: 18,
+  codeName: 'AuthenticationFailed',
+  [Symbol(errorLabels)]: Set(0) {}
+}
 ```
 
 ### Changes done to files cloned from official setup tools from mongodb repos:

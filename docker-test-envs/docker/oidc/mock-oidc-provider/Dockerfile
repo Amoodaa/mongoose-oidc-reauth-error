@@ -8,7 +8,7 @@ ARG NODE_VERSION=20.10.0
 # for docker on x64 platforms, uncomment this:
 # ARG NODE_ARCH=x64 for docker on x64 systems
 # for docker on macos/arm platforms, uncomment this:
-# ARG NODE_ARCH=arm64 
+ARG NODE_ARCH=arm64 
 ARG NODE_PACKAGE=node-v$NODE_VERSION-linux-$NODE_ARCH
 ARG NODE_HOME=/opt/$NODE_PACKAGE
 ENV NODE_PATH $NODE_HOME/lib/node_modules

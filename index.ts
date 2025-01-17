@@ -30,29 +30,30 @@ async function setupExpressTest() {
   const app = Express();
 
   app.get('*', async (_req, res) => {
-    try {
-      const foo = await fooModel.create({ state: 'on' });
-
-      res.json(foo.toObject());
-    } catch (e) {
-      console.error(e);
-      const {
-        cause,
-        code,
-        errmsg,
-        message,
-        codeName,
-        stack,
-      }: MongoServerError = e;
-      res.json({
-        message,
-        errmsg,
-        cause,
-        code,
-        codeName,
-        stack,
-      });
-    }
+    const timeoutId = setInterval(async () => {
+      try {
+        await fooModel.create({ state: 'on' });
+      } catch (e) {
+        console.error(e);
+        const {
+          cause,
+          code,
+          errmsg,
+          message,
+          codeName,
+          stack,
+        }: MongoServerError = e;
+        res.json({
+          message,
+          errmsg,
+          cause,
+          code,
+          codeName,
+          stack,
+        });
+        clearInterval(timeoutId);
+      }
+    }, 100);
   });
 
   app.listen(8080, () => {
