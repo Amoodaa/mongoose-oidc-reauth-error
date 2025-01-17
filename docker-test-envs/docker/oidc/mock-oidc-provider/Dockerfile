@@ -6,9 +6,9 @@ RUN apt-get update && apt-get install -y \
 ARG TARGETARCH
 ARG NODE_VERSION=20.10.0
 # change arch as needed
-# ARG NODE_ARCH=linux-x64 for docker on x64 systems
+# ARG NODE_ARCH=x64 for docker on x64 systems
 # ARG NODE_ARCH=arm64 for docker on macos/arm systems
-ARG NODE_PACKAGE=node-v$NODE_VERSION-$NODE_ARCH
+ARG NODE_PACKAGE=node-v$NODE_VERSION-linux-$NODE_ARCH
 ARG NODE_HOME=/opt/$NODE_PACKAGE
 ENV NODE_PATH $NODE_HOME/lib/node_modules
 ENV PATH $NODE_HOME/bin:$PATH
