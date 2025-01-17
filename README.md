@@ -6,6 +6,12 @@ All our services worked fine, then default 3600s for a token to expire kicked in
 
 I've spent 2 days working this out, between reading mongodb driver specs, mongodb/node-mongodb-native, mongodb-js/dev-tools and here's the reproduction
 
+While i do understand that maybe my test setup is not ideal, because it does not ask a local command, just like the GCP workflow to generate a new access token, i believe this can be modified to maybe expose the problem, or at least might show that the problem is the GCP machine workflow is not requesting a new access token consistently, this local setup will be helpful to debugging this problem i think.
+
+I am unsure of how to support the "refresh_token" in this flow, as it is not a Human workflow, and all machine workflows are not refresh-token friendly
+
+Let me know what can i do next
+
 ### How to setup and run
 
 - start by running `yarn`
